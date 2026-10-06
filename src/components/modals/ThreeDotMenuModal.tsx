@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Heart, ListPlus, Share2, Info, X, Check, Copy } from 'lucide-react';
+import { Heart, ListPlus, Share2, Info, X, Check, Copy, Trash2 } from 'lucide-react';
 import { Song } from '../../types';
 import { usePlayer } from '../../context/PlayerContext';
+import { DeleteSongModal } from './DeleteSongModal';
 
 interface ThreeDotMenuModalProps {
   song: Song | null;
@@ -18,6 +19,7 @@ export const ThreeDotMenuModal: React.FC<ThreeDotMenuModalProps> = ({
 }) => {
   const { toggleFavorite, isFavorite, addToQueue } = usePlayer();
   const [copied, setCopied] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   if (!isOpen || !song) return null;
 
@@ -154,8 +156,30 @@ export const ThreeDotMenuModal: React.FC<ThreeDotMenuModalProps> = ({
               <p className="text-xs text-slate-400">Audio metadata and repository path</p>
             </div>
           </button>
+
+          <button
+            onClick={() => setIsDeleteModalOpen(true)}
+            className="w-full flex items-center gap-3.5 px-3 py-3 rounded-xl hover:bg-rose-950/30 active:bg-rose-900/40 text-left transition text-rose-300"
+          >
+            <div className="w-9 h-9 rounded-lg bg-rose-500/15 text-rose-400 flex items-center justify-center">
+              <Trash2 className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-rose-300">Delete Nasheed</p>
+              <p className="text-xs text-rose-400/80">Requires security password (5090)</p>
+            </div>
+          </button>
         </div>
       </div>
+
+      <DeleteSongModal
+        song={song}
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          onClose();
+        }}
+      />
     </div>
   );
 };

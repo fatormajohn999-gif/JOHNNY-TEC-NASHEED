@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Play, Pause, Heart, MoreVertical } from 'lucide-react';
+import { Play, Pause, Heart, MoreVertical, Trash2 } from 'lucide-react';
 import { Song } from '../../types';
 import { usePlayer } from '../../context/PlayerContext';
 import { getSongCoverUrl, FALLBACK_COVER } from '../../utils/paths';
+import { DeleteSongModal } from '../modals/DeleteSongModal';
 
 interface NasheedCardProps {
   song: Song;
@@ -17,6 +18,7 @@ export const NasheedCard: React.FC<NasheedCardProps> = ({
 }) => {
   const { currentSong, isPlaying, playSong, togglePlayPause, toggleFavorite, isFavorite } = usePlayer();
   const [imgError, setImgError] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const isCurrent = currentSong?.id === song.id;
   const isThisPlaying = isCurrent && isPlaying;
@@ -66,7 +68,7 @@ export const NasheedCard: React.FC<NasheedCardProps> = ({
         {/* Ambient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
 
-        {/* Top-Right Favorite & Options */}
+        {/* Top-Right Favorite, Delete & Options */}
         <div className="absolute top-2 right-2 flex items-center gap-1 z-10">
           <button
             onClick={handleFavClick}
@@ -78,6 +80,17 @@ export const NasheedCard: React.FC<NasheedCardProps> = ({
                 favorited ? 'fill-amber-400 text-amber-400' : 'text-slate-300'
               }`}
             />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsDeleteOpen(true);
+            }}
+            aria-label="Delete nasheed"
+            title="Delete nasheed"
+            className="w-8 h-8 rounded-full bg-slate-950/60 backdrop-blur-md flex items-center justify-center text-slate-300 hover:text-rose-400 hover:bg-rose-950/60 transition active:scale-90"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
           </button>
           {onOpenMenu && (
             <button
@@ -136,6 +149,12 @@ export const NasheedCard: React.FC<NasheedCardProps> = ({
           )}
         </div>
       </div>
+
+      <DeleteSongModal
+        song={song}
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+      />
     </div>
   );
 };

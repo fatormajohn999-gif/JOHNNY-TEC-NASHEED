@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Play, Pause, Heart, MoreVertical } from 'lucide-react';
+import { Play, Pause, Heart, MoreVertical, Trash2 } from 'lucide-react';
 import { Song } from '../../types';
 import { usePlayer } from '../../context/PlayerContext';
 import { getSongCoverUrl, FALLBACK_COVER } from '../../utils/paths';
+import { DeleteSongModal } from '../modals/DeleteSongModal';
 
 interface NasheedRowProps {
   song: Song;
@@ -21,6 +22,7 @@ export const NasheedRow: React.FC<NasheedRowProps> = ({
 }) => {
   const { currentSong, isPlaying, playSong, togglePlayPause, toggleFavorite, isFavorite } = usePlayer();
   const [imgError, setImgError] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const isCurrent = currentSong?.id === song.id;
   const isThisPlaying = isCurrent && isPlaying;
@@ -119,7 +121,7 @@ export const NasheedRow: React.FC<NasheedRowProps> = ({
         </div>
       </div>
 
-      {/* Right Actions: Duration, Favorite, Menu */}
+      {/* Right Actions: Duration, Favorite, Delete, Menu */}
       <div className="flex items-center gap-1 shrink-0">
         {song.duration && (
           <span className="text-xs text-slate-400 tabular-nums px-2 hidden sm:inline-block">
@@ -139,6 +141,18 @@ export const NasheedRow: React.FC<NasheedRowProps> = ({
           />
         </button>
 
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsDeleteOpen(true);
+          }}
+          aria-label="Delete nasheed"
+          title="Delete nasheed"
+          className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 transition active:scale-90"
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
+
         {onOpenMenu && (
           <button
             onClick={handleMenuClick}
@@ -149,6 +163,12 @@ export const NasheedRow: React.FC<NasheedRowProps> = ({
           </button>
         )}
       </div>
+
+      <DeleteSongModal
+        song={song}
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+      />
     </div>
   );
 };

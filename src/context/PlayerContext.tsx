@@ -44,6 +44,7 @@ interface PlayerContextType {
   closeQueue: () => void;
   addCustomSong: (song: Song) => void;
   deleteCustomSong: (id: string) => void;
+  deleteSong: (songId: string, password: string) => Promise<{ success: boolean; error?: string }>;
   clearHistory: () => void;
   clearFavorites: () => void;
   updateVisualizerSettings: (newSettings: Partial<VisualizerSettings>) => void;
@@ -53,7 +54,13 @@ const PlayerContext = createContext<PlayerContextType | null>(null);
 
 export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [customSongs, setCustomSongs] = useState<Song[]>(() => StorageService.getCustomSongs());
-  const allSongs = useMemo(() => [...DEFAULT_SONGS, ...customSongs].map(normalizeSong), [customSongs]);
+  const [deletedSongIds, setDeletedSongIds] = useState<string[]>(() => StorageService.getDeletedSongs());
+  const allSongs = useMemo(() => {
+    const deletedSet = new Set(deletedSongIds);
+    return [...DEFAULT_SONGS, ...customSongs]
+      .filter(s => !deletedSet.has(s.id))
+      .map(normalizeSong);
+  }, [customSongs, deletedSongIds]);
 
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -378,6 +385,77 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     });
   }, []);
 
+  const deleteSong = useCallback(async (songId: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    if (password !== '5090') {
+      return { success: false, error: 'Incorrect password. Deletion cancelled.' };
+    }
+
+    const targetSong = allSongs.find(s => s.id === songId);
+    if (!targetSong) {
+      return { success: false, error: 'Song not found in library.' };
+    }
+
+    // 1. If currently playing this song, stop or advance
+    if (currentSongRef.current?.id === songId) {
+      audioEl.pause();
+      setIsPlaying(false);
+      const remaining = allSongs.filter(s => s.id !== songId);
+      if (remaining.length > 0) {
+        const nextSong = remaining[0];
+        setCurrentSong(nextSong);
+        audioEl.src = getSongAudioUrl(nextSong);
+      } else {
+        setCurrentSong(null);
+      }
+    }
+
+    // 2. Remove from favorites & history
+    setFavorites(prev => {
+      const updated = prev.filter(id => id !== songId);
+      StorageService.saveFavorites(updated);
+      return updated;
+    });
+
+    setHistory(prev => {
+      const updated = prev.filter(id => id !== songId);
+      StorageService.saveHistory(updated);
+      return updated;
+    });
+
+    // 3. Remove from queue
+    setQueue(prev => prev.filter(s => s.id !== songId));
+
+    // 4. Mark deleted in persistent storage
+    StorageService.addDeletedSong(songId);
+    setDeletedSongIds(prev => [...prev, songId]);
+
+    // 5. Clean up from Cache Storage if offline cached
+    if (typeof window !== 'undefined' && 'caches' in window) {
+      try {
+        const cache = await caches.open('johnny-tec-nasheed-v1.3.0');
+        await cache.delete(getSongAudioUrl(targetSong), { ignoreSearch: true });
+        if (targetSong.cover) {
+          await cache.delete(targetSong.cover, { ignoreSearch: true });
+        }
+      } catch (err) {
+        console.debug('Cache cleanup note:', err);
+      }
+    }
+
+    // 6. Call secure backend endpoint to delete from disk if server is active
+    try {
+      await fetch('/api/delete-song', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ songId, password: '5090' })
+      });
+    } catch {
+      // In offline / GitHub Pages static mode, client-side deletion is already complete
+    }
+
+    return { success: true };
+  }, [allSongs, audioEl]);
+
   return (
     <PlayerContext.Provider
       value={{
@@ -418,6 +496,7 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         closeQueue,
         addCustomSong,
         deleteCustomSong,
+        deleteSong,
         clearHistory,
         clearFavorites,
         updateVisualizerSettings

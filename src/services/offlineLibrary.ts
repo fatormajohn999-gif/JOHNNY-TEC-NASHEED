@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import bundledManifest from '../data/music-manifest.json';
 import { resolveAssetUrl } from '../utils/paths';
 
-const CACHE_NAME = 'johnny-tec-nasheed-v1.0.0';
+const CACHE_NAME = 'johnny-tec-nasheed-v1.3.0';
 
 export interface ManifestTrack {
   id: string;

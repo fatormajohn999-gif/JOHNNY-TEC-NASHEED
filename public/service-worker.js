@@ -3,17 +3,22 @@
  * Versioned Offline Caching with Audio Range Support
  */
 
-const CACHE_NAME = 'johnny-tec-nasheed-v1.0.0';
+const CACHE_NAME = 'johnny-tec-nasheed-v1.3.0';
 
 // Core assets to pre-cache on install
 const PRECACHE_ASSETS = [
   './',
   './index.html',
+  './manifest.webmanifest',
   './manifest.json',
   './music-manifest.json',
   './icon.svg',
+  './favicon.png',
   './pwa-192x192.png',
   './pwa-512x512.png',
+  './pwa-maskable-512x512.png',
+  './assets/icons/pwa-192x192.png',
+  './assets/icons/pwa-512x512.png',
   './apple-touch-icon.png',
   './assets/covers/default-cover.jpg',
   './assets/covers/nasheed-001.jpg',

@@ -9,6 +9,7 @@ const STORAGE_KEYS = {
   SHUFFLE: 'johnny_tec_nasheed_shuffle',
   REPEAT: 'johnny_tec_nasheed_repeat',
   CUSTOM_SONGS: 'johnny_tec_nasheed_custom_songs',
+  DELETED_SONGS: 'johnny_tec_nasheed_deleted_songs',
   VISUALIZER: 'johnny_tec_nasheed_visualizer_settings'
 };
 
@@ -55,6 +56,14 @@ export const StorageService = {
       return data ? JSON.parse(data) : [];
     } catch {
       return [];
+    }
+  },
+
+  saveHistory(history: string[]): void {
+    try {
+      localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(history));
+    } catch (e) {
+      console.warn('Could not save history', e);
     }
   },
 
@@ -153,6 +162,26 @@ export const StorageService = {
       localStorage.setItem(STORAGE_KEYS.CUSTOM_SONGS, JSON.stringify(updated));
     } catch (e) {
       console.warn('Could not delete custom song', e);
+    }
+  },
+
+  getDeletedSongs(): string[] {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.DELETED_SONGS);
+      return data ? JSON.parse(data) : [];
+    } catch {
+      return [];
+    }
+  },
+
+  addDeletedSong(id: string): void {
+    try {
+      const existing = this.getDeletedSongs();
+      if (!existing.includes(id)) {
+        localStorage.setItem(STORAGE_KEYS.DELETED_SONGS, JSON.stringify([...existing, id]));
+      }
+    } catch (e) {
+      console.warn('Could not save deleted song id', e);
     }
   },
 

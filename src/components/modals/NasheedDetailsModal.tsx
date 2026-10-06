@@ -1,7 +1,8 @@
-import React from 'react';
-import { X, Music2, Image as ImageIcon, FolderGit2, Info } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Music2, Image as ImageIcon, FolderGit2, Info, Trash2 } from 'lucide-react';
 import { Song } from '../../types';
 import { getSongAudioPath, getSongCoverPath } from '../../utils/paths';
+import { DeleteSongModal } from './DeleteSongModal';
 
 interface NasheedDetailsModalProps {
   song: Song | null;
@@ -14,6 +15,8 @@ export const NasheedDetailsModal: React.FC<NasheedDetailsModalProps> = ({
   isOpen,
   onClose
 }) => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   if (!isOpen || !song) return null;
 
   return (
@@ -94,13 +97,31 @@ export const NasheedDetailsModal: React.FC<NasheedDetailsModalProps> = ({
           </div>
         </div>
 
-        <button
-          onClick={onClose}
-          className="mt-6 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-sm transition"
-        >
-          Close
-        </button>
+        <div className="mt-6 flex items-center gap-2">
+          <button
+            onClick={() => setIsDeleteModalOpen(true)}
+            className="py-2.5 px-4 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 font-semibold text-sm transition flex items-center gap-1.5"
+          >
+            <Trash2 className="w-4 h-4" />
+            <span>Delete</span>
+          </button>
+          <button
+            onClick={onClose}
+            className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-sm transition text-center"
+          >
+            Close
+          </button>
+        </div>
       </div>
+
+      <DeleteSongModal
+        song={song}
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          onClose();
+        }}
+      />
     </div>
   );
 };
