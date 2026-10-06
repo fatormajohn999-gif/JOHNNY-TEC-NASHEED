@@ -30,11 +30,11 @@
 │       ├── nasheed-001.jpg
 │       ├── default-cover.jpg
 │       └── ...
-├── data/
-│   ├── songs.js              # 📜 Core song metadata library
-│   └── categories.js         # 🏷️ Data-driven categories
+├── src/
+│   ├── data/
+│   │   ├── songs.ts          # 📜 Single Authoritative Music Library
+│   │   └── categories.ts     # 🏷️ Data-driven categories
 ├── public/                   # Static PWA assets (manifest, icons, service worker)
-├── src/                      # Source code (React + TypeScript + Tailwind)
 ├── index.html
 ├── manifest.json
 └── README.md
@@ -42,57 +42,64 @@
 
 ---
 
-## 🎵 How to Add a New Song (Step-by-Step)
+## 🎵 How to Add a New Song (No Renaming Required!)
 
-Adding music to your app is simple and designed entirely around GitHub.
+You can upload audio files and cover images with **completely different, uncoordinated filenames**. You never need to rename your MP3 or cover image to match each other or match the song title.
 
-### Step 1: Add your Audio File
-Upload your `.mp3` or `.wav` file into the `assets/music/` directory.
-
-Example:
-```text
-assets/music/my-beautiful-nasheed.mp3
-```
-
-> **Tip:** The filename does **not** have to match the display title. You can name it whatever you want (e.g. `track04_final.mp3`).
-
-### Step 2: Add your Cover Artwork
-Upload a square image (`.jpg` or `.png`, ideally 500×500px or larger) into the `assets/covers/` directory.
+### Step 1: Upload Your Audio File
+Place your `.mp3` or `.wav` file into `assets/music/` using **whatever filename it already has**.
 
 Example:
 ```text
-assets/covers/my-beautiful-nasheed.jpg
+assets/music/my_recording_2026_final.mp3
 ```
 
-### Step 3: Register Metadata in `data/songs.js` and `src/data/songs.ts`
-Open `data/songs.js` (and `src/data/songs.ts`) and add an entry:
+### Step 2: Upload Your Cover Artwork
+Place your cover image into `assets/covers/` using **whatever filename it already has**.
 
-```javascript
+Example:
+```text
+assets/covers/green_mosque_photo.jpg
+```
+
+### Step 3: Register in `src/data/songs.ts`
+Open the single authoritative library file: `src/data/songs.ts` and add an entry referencing `audioFile` and `coverFile`:
+
+```typescript
 {
-  id: "my-beautiful-nasheed",
-  title: "Ya Quluban",
-  artist: "JOHNNY TEC",
+  id: "ya-rasulallah-001",
+  title: "Ya Rasulallah",
+  artist: "Ahmed Nasheed",
   album: "Sacred Harmonies Vol. II",
   category: "Spiritual",
-  duration: "4:15",
-  durationSec: 255,
   year: "2026",
-  audio: "./assets/music/my-beautiful-nasheed.mp3",
-  cover: "./assets/covers/my-beautiful-nasheed.jpg",
+  audioFile: "my_recording_2026_final.mp3",
+  coverFile: "green_mosque_photo.jpg",
   featured: true,
   popular: true,
-  description: "Devotional vocal arrangement for evening remembrance."
+  description: "Devotional vocal arrangement for evening contemplation."
 }
 ```
 
-### Step 4: Commit and Push to GitHub
-Commit your changes to the `main` branch:
+> **Key Rule:** The filenames (`my_recording_2026_final.mp3` and `green_mosque_photo.jpg`) do **not** need to match each other or the song title. The app automatically constructs the proper paths (`./assets/music/...` and `./assets/covers/...`) at runtime.
+
+### Step 4 (Optional): Validate or Scan Your Library
+You can run automated verification tools anytime:
 ```bash
-git add assets/ data/ src/data/
-git commit -m "Add new nasheed: Ya Quluban"
+# Verify that all audioFile and coverFile references exist on disk:
+npm run validate
+
+# Scan for newly uploaded files in assets/music/ and generate template snippets:
+npm run scan
+```
+
+### Step 5: Commit and Push to GitHub
+```bash
+git add assets/ src/data/songs.ts
+git commit -m "Add new nasheed: Ya Rasulallah"
 git push origin main
 ```
-The automated GitHub Actions workflow will instantly build and deploy the update to your live GitHub Pages site.
+The automated GitHub Actions workflow will validate the files, build the Vite app, and deploy the updated nasheed library to your live GitHub Pages site.
 
 ---
 

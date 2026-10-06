@@ -4,7 +4,7 @@ import { DEFAULT_SONGS } from '../data/songs';
 import { StorageService } from '../services/storage';
 import { audioEngine } from '../services/audioEngine';
 import { updateMediaSession, updateMediaSessionPositionState } from '../services/mediaSession';
-import { resolveAssetUrl } from '../utils/paths';
+import { resolveAssetUrl, getSongAudioUrl, normalizeSong } from '../utils/paths';
 
 interface PlayerContextType {
   allSongs: Song[];
@@ -53,7 +53,7 @@ const PlayerContext = createContext<PlayerContextType | null>(null);
 
 export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [customSongs, setCustomSongs] = useState<Song[]>(() => StorageService.getCustomSongs());
-  const allSongs = useMemo(() => [...DEFAULT_SONGS, ...customSongs], [customSongs]);
+  const allSongs = useMemo(() => [...DEFAULT_SONGS, ...customSongs].map(normalizeSong), [customSongs]);
 
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -95,7 +95,7 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setQueueIndex(idx >= 0 ? idx : 0);
 
       // Pre-set audio source and position
-      const resolvedUrl = resolveAssetUrl(defaultSong.audio);
+      const resolvedUrl = getSongAudioUrl(defaultSong);
       audioEl.src = resolvedUrl;
       audioEl.volume = volume;
       if (position > 0) {
@@ -187,7 +187,7 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setCurrentSong(song);
     setPlaybackError(null);
 
-    const resolvedUrl = resolveAssetUrl(song.audio);
+    const resolvedUrl = getSongAudioUrl(song);
     if (audioEl.src !== resolvedUrl) {
       audioEl.src = resolvedUrl;
     }

@@ -1,5 +1,5 @@
 import { Song } from '../types';
-import { resolveAssetUrl } from '../utils/paths';
+import { getSongCoverUrl } from '../utils/paths';
 
 export function updateMediaSession(
   song: Song | null,
@@ -16,7 +16,7 @@ export function updateMediaSession(
   }
 
   try {
-    const coverUrl = resolveAssetUrl(song.cover);
+    const coverUrl = getSongCoverUrl(song);
     navigator.mediaSession.metadata = new MediaMetadata({
       title: song.title,
       artist: song.artist,

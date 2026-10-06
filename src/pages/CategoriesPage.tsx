@@ -106,7 +106,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({ initialCategoryI
               <FolderHeart className="w-12 h-12 text-slate-600 mx-auto mb-3" />
               <h3 className="text-base font-semibold text-slate-300">No Nasheeds in this Category</h3>
               <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-                You can tag any nasheed with &ldquo;{activeCategory.name}&rdquo; in data/songs.js to populate this collection.
+                You can tag any nasheed with &ldquo;{activeCategory.name}&rdquo; in src/data/songs.ts to populate this collection.
               </p>
             </div>
           )}

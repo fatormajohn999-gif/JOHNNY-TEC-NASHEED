@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Music2, Image as ImageIcon, FolderGit2, Info } from 'lucide-react';
 import { Song } from '../../types';
+import { getSongAudioPath, getSongCoverPath } from '../../utils/paths';
 
 interface NasheedDetailsModalProps {
   song: Song | null;
@@ -79,16 +80,16 @@ export const NasheedDetailsModal: React.FC<NasheedDetailsModalProps> = ({
             <div className="space-y-1.5 font-mono text-[11px]">
               <div className="bg-slate-950 p-2 rounded-lg border border-slate-800 flex items-center gap-2">
                 <Music2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                <span className="text-slate-300 truncate">{song.audio}</span>
+                <span className="text-slate-300 truncate">{getSongAudioPath(song)}</span>
               </div>
               <div className="bg-slate-950 p-2 rounded-lg border border-slate-800 flex items-center gap-2">
                 <ImageIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span className="text-slate-300 truncate">{song.cover}</span>
+                <span className="text-slate-300 truncate">{getSongCoverPath(song)}</span>
               </div>
             </div>
 
             <p className="text-[11px] text-slate-400 leading-normal pt-1">
-              To swap this audio file, replace the file in your repository at <code className="text-amber-300 bg-slate-950 px-1 py-0.5 rounded">assets/music/</code> and commit to GitHub.
+              Audio: <code className="text-teal-300">{song.audioFile || song.audio}</code> · Cover: <code className="text-amber-300">{song.coverFile || song.cover}</code>
             </p>
           </div>
         </div>

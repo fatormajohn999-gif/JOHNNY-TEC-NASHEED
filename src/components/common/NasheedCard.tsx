@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Play, Pause, Heart, MoreVertical } from 'lucide-react';
 import { Song } from '../../types';
 import { usePlayer } from '../../context/PlayerContext';
-import { resolveAssetUrl, FALLBACK_COVER } from '../../utils/paths';
+import { getSongCoverUrl, FALLBACK_COVER } from '../../utils/paths';
 
 interface NasheedCardProps {
   song: Song;
@@ -42,7 +42,7 @@ export const NasheedCard: React.FC<NasheedCardProps> = ({
     }
   };
 
-  const coverUrl = imgError ? FALLBACK_COVER : resolveAssetUrl(song.cover);
+  const coverUrl = imgError ? FALLBACK_COVER : getSongCoverUrl(song);
 
   return (
     <div

@@ -22,7 +22,7 @@ import { AudioVisualizer } from '../visualizer/AudioVisualizer';
 import { ThreeDotMenuModal } from '../modals/ThreeDotMenuModal';
 import { NasheedDetailsModal } from '../modals/NasheedDetailsModal';
 import { QueueModal } from './QueueModal';
-import { resolveAssetUrl, FALLBACK_COVER, formatTime } from '../../utils/paths';
+import { getSongCoverUrl, formatTime } from '../../utils/paths';
 import { Song } from '../../types';
 
 export const NowPlayingModal: React.FC = () => {
@@ -63,7 +63,7 @@ export const NowPlayingModal: React.FC = () => {
   if (!isNowPlayingOpen || !currentSong) return null;
 
   const favorited = isFavorite(currentSong.id);
-  const coverUrl = resolveAssetUrl(currentSong.cover) || FALLBACK_COVER;
+  const coverUrl = getSongCoverUrl(currentSong);
 
   const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsSeeking(true);

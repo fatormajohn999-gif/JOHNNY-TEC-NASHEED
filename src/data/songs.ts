@@ -1,5 +1,15 @@
 import { Song } from '../types';
 
+/**
+ * JOHNNY TEC × NASHEED - Authoritative Music Library Data
+ * 
+ * TO ADD A NEW SONG:
+ * 1. Upload your audio file to assets/music/ (ANY filename, e.g. track_final_27.mp3)
+ * 2. Upload your cover image to assets/covers/ (ANY filename, e.g. mosque_green_1920.jpg)
+ * 3. Add an entry below referencing audioFile and coverFile!
+ * 
+ * NOTE: Filenames do NOT need to match each other or the displayed title.
+ */
 export const DEFAULT_SONGS: Song[] = [
   {
     id: "nasheed-001",
@@ -10,8 +20,8 @@ export const DEFAULT_SONGS: Song[] = [
     duration: "4:32",
     durationSec: 272,
     year: "2026",
-    audio: "./assets/music/nasheed-001.wav",
-    cover: "./assets/covers/nasheed-001.jpg",
+    audioFile: "nasheed-001.wav",
+    coverFile: "nasheed-001.jpg",
     featured: true,
     popular: true,
     description: "A serene, devotional contemplation invoking the infinite mercy of Ar-Rahman with gentle acoustic resonance."
@@ -25,8 +35,8 @@ export const DEFAULT_SONGS: Song[] = [
     duration: "5:14",
     durationSec: 314,
     year: "2026",
-    audio: "./assets/music/nasheed-002.wav",
-    cover: "./assets/covers/nasheed-002.jpg",
+    audioFile: "nasheed-002.wav",
+    coverFile: "nasheed-002.jpg",
     featured: true,
     popular: true,
     description: "Heartfelt acoustic contemplation welcoming the tranquility and stillness of blessed Ramadan nights."
@@ -40,8 +50,8 @@ export const DEFAULT_SONGS: Song[] = [
     duration: "3:58",
     durationSec: 238,
     year: "2026",
-    audio: "./assets/music/nasheed-003.wav",
-    cover: "./assets/covers/nasheed-003.jpg",
+    audioFile: "nasheed-003.wav",
+    coverFile: "nasheed-003.jpg",
     featured: true,
     popular: false,
     description: "A rhythmic, uplifting arrangement of the historical welcoming poem of the Prophet (pbuh) into Madinah."
@@ -55,8 +65,8 @@ export const DEFAULT_SONGS: Song[] = [
     duration: "4:45",
     durationSec: 285,
     year: "2026",
-    audio: "./assets/music/nasheed-004.wav",
-    cover: "./assets/covers/nasheed-004.jpg",
+    audioFile: "nasheed-004.wav",
+    coverFile: "nasheed-004.jpg",
     featured: false,
     popular: true,
     description: "Deep, meditative vocal prayer for solace, patience, and unwavering faith during times of testing."
@@ -70,8 +80,8 @@ export const DEFAULT_SONGS: Song[] = [
     duration: "4:10",
     durationSec: 250,
     year: "2026",
-    audio: "./assets/music/nasheed-005.wav",
-    cover: "./assets/covers/nasheed-005.jpg",
+    audioFile: "nasheed-005.wav",
+    coverFile: "nasheed-005.jpg",
     featured: false,
     popular: true,
     description: "A tranquil dawn recitation celebrating the quiet hour before sunrise with gentle ambient vocal pads."

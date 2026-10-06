@@ -159,7 +159,7 @@ export const UploadNasheedModal: React.FC<UploadNasheedModalProps> = ({ isOpen, 
             <div className="p-3 rounded-xl bg-slate-950 border border-slate-800/80 flex items-start gap-2.5 text-[11px] text-slate-400">
               <FolderGit2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
               <p>
-                To permanently bundle this song into your GitHub repo, put the file in <code className="text-amber-300">assets/music/</code> and add it to <code className="text-amber-300">data/songs.js</code>.
+                To permanently bundle this song into your GitHub repo, upload the file to <code className="text-amber-300">assets/music/</code> (any filename) and register its <code className="text-amber-300">audioFile</code> in <code className="text-amber-300">src/data/songs.ts</code>.
               </p>
             </div>
 

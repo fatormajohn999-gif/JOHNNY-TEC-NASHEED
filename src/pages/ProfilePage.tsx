@@ -15,6 +15,7 @@ import { usePlayer } from '../context/PlayerContext';
 import { useOnlineStatus } from '../components/pwa/OfflineIndicator';
 import { PWAInstallButton } from '../components/pwa/PWAInstallButton';
 import { UploadNasheedModal } from '../components/modals/UploadNasheedModal';
+import { getSongAudioUrl } from '../utils/paths';
 
 export const ProfilePage: React.FC = () => {
   const { allSongs, favorites, history, clearFavorites, clearHistory } = usePlayer();
@@ -48,7 +49,7 @@ export const ProfilePage: React.FC = () => {
     setCacheStatus('caching');
     try {
       const cache = await caches.open('johnny-tec-nasheed-v1');
-      const urlsToCache = allSongs.map(s => s.audio);
+      const urlsToCache = allSongs.map(s => getSongAudioUrl(s));
       await Promise.all(
         urlsToCache.map(async (url) => {
           try {

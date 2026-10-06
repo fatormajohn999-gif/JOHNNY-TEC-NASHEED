@@ -7,7 +7,7 @@ import { ThreeDotMenuModal } from '../components/modals/ThreeDotMenuModal';
 import { NasheedDetailsModal } from '../components/modals/NasheedDetailsModal';
 import { CATEGORIES } from '../data/categories';
 import { Song, PageId } from '../types';
-import { resolveAssetUrl, FALLBACK_COVER } from '../utils/paths';
+import { getSongCoverUrl } from '../utils/paths';
 
 interface HomePageProps {
   onNavigate: (page: PageId, categoryId?: string) => void;
@@ -80,7 +80,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               <div className="flex items-center gap-4 min-w-0">
                 <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-slate-950 shadow-md">
                   <img
-                    src={resolveAssetUrl(continueSong.cover) || FALLBACK_COVER}
+                    src={getSongCoverUrl(continueSong)}
                     alt={continueSong.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />

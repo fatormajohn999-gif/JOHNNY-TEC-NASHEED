@@ -7,8 +7,12 @@ export interface Song {
   duration?: string;
   durationSec?: number;
   year?: string;
-  audio: string;
-  cover: string;
+  // Specific real filenames in assets/music/ and assets/covers/ (no renaming required)
+  audioFile?: string; // e.g. "track_final_27.mp3" or "nasheed-001.wav"
+  coverFile?: string; // e.g. "mosque_green_1920.jpg" or "nasheed-001.jpg"
+  // Backward compatibility / optional direct paths
+  audio?: string;
+  cover?: string;
   featured?: boolean;
   popular?: boolean;
   description?: string;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Play, Pause, SkipForward, Heart } from 'lucide-react';
 import { usePlayer } from '../../context/PlayerContext';
-import { resolveAssetUrl, FALLBACK_COVER } from '../../utils/paths';
+import { getSongCoverUrl, FALLBACK_COVER } from '../../utils/paths';
 
 export const MiniPlayer: React.FC = () => {
   const {
@@ -26,7 +26,7 @@ export const MiniPlayer: React.FC = () => {
 
   const progressPercent = duration > 0 ? Math.min(100, (currentTime / duration) * 100) : 0;
   const favorited = isFavorite(currentSong.id);
-  const coverUrl = imgError ? FALLBACK_COVER : resolveAssetUrl(currentSong.cover);
+  const coverUrl = imgError ? FALLBACK_COVER : getSongCoverUrl(currentSong);
 
   return (
     <div
