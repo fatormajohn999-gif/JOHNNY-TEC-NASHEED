@@ -20,11 +20,15 @@ const PRECACHE_ASSETS = [
   './assets/covers/nasheed-003.jpg',
   './assets/covers/nasheed-004.jpg',
   './assets/covers/nasheed-005.jpg',
+  './assets/covers/file_000000004e288210992b60529184b6b7.png',
+  './assets/covers/file_00000000cda8820ab24ae8c8200f7de1.png',
   './assets/music/nasheed-001.wav',
   './assets/music/nasheed-002.wav',
   './assets/music/nasheed-003.wav',
   './assets/music/nasheed-004.wav',
-  './assets/music/nasheed-005.wav'
+  './assets/music/nasheed-005.wav',
+  './assets/music/A Thousand Years (Slowed)- Christina Perri_1790383311858.mp3',
+  './assets/music/Dynasty (Official Music Video)  MIIA_1790372753013.mp3'
 ];
 
 self.addEventListener('install', (event) => {

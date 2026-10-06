@@ -1,9 +1,9 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-10-06T01:59:17.294Z",
-  "totalTracks": 5,
-  "totalBytes": 24696220,
-  "totalSizeFormatted": "23.6 MB",
+  "generatedAt": "2026-10-06T12:41:47.428Z",
+  "totalTracks": 26,
+  "totalBytes": 141403028,
+  "totalSizeFormatted": "134.9 MB",
   "tracks": [
     {
       "id": "nasheed-001",
@@ -59,6 +59,237 @@
       "cover": "./assets/covers/nasheed-005.jpg",
       "coverFile": "nasheed-005.jpg",
       "bytes": 4939244
+    },
+    {
+      "id": "nasheed-006",
+      "title": "A Thousand Years (Slowed Meditation)",
+      "artist": "Christina Perri (JOHNNY TEC Arrangement)",
+      "category": "Peace",
+      "audio": "./assets/music/A Thousand Years (Slowed)- Christina Perri_1790383311858.mp3",
+      "audioFile": "A Thousand Years (Slowed)- Christina Perri_1790383311858.mp3",
+      "cover": "./assets/covers/file_000000004e288210992b60529184b6b7.png",
+      "coverFile": "file_000000004e288210992b60529184b6b7.png",
+      "bytes": 5303906
+    },
+    {
+      "id": "nasheed-007",
+      "title": "Dynasty",
+      "artist": "MIIA (JOHNNY TEC Sacred Edit)",
+      "category": "Spiritual",
+      "audio": "./assets/music/Dynasty (Official Music Video)  MIIA_1790372753013.mp3",
+      "audioFile": "Dynasty (Official Music Video)  MIIA_1790372753013.mp3",
+      "cover": "./assets/covers/file_00000000cda8820ab24ae8c8200f7de1.png",
+      "coverFile": "file_00000000cda8820ab24ae8c8200f7de1.png",
+      "bytes": 4150866
+    },
+    {
+      "id": "nasheed-008",
+      "title": "Rahmatun Lil'Alameen",
+      "artist": "Maher Zain",
+      "category": "Spiritual",
+      "audio": "./assets/music/Rahmatun_Lil_Alameen_Maher_Zain.wav",
+      "audioFile": "Rahmatun_Lil_Alameen_Maher_Zain.wav",
+      "cover": "./assets/covers/cover_rahmatun_lil_alameen.jpg",
+      "coverFile": "cover_rahmatun_lil_alameen.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-009",
+      "title": "Ashraqat Nafsi",
+      "artist": "Mishary Rashid Alafasy",
+      "category": "Spiritual",
+      "audio": "./assets/music/Ashraqat_Nafsi_Mishary_Rashid_Alafasy.wav",
+      "audioFile": "Ashraqat_Nafsi_Mishary_Rashid_Alafasy.wav",
+      "cover": "./assets/covers/cover_ashraqat_nafsi.jpg",
+      "coverFile": "cover_ashraqat_nafsi.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-010",
+      "title": "Taweel Al Shawq",
+      "artist": "Ahmed Bukhatir",
+      "category": "Traditional",
+      "audio": "./assets/music/Taweel_Al_Shawq_Ahmed_Bukhatir.wav",
+      "audioFile": "Taweel_Al_Shawq_Ahmed_Bukhatir.wav",
+      "cover": "./assets/covers/cover_taweel_al_shawq.jpg",
+      "coverFile": "cover_taweel_al_shawq.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-011",
+      "title": "Kun Anta",
+      "artist": "Humood AlKhudher",
+      "category": "Peace",
+      "audio": "./assets/music/Kun_Anta_Humood_AlKhudher.wav",
+      "audioFile": "Kun_Anta_Humood_AlKhudher.wav",
+      "cover": "./assets/covers/cover_kun_anta.jpg",
+      "coverFile": "cover_kun_anta.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-012",
+      "title": "Subhanallah (Tu Hi Meri Maula)",
+      "artist": "Maher Zain",
+      "category": "Dua",
+      "audio": "./assets/music/Subhanallah_Tu_Hi_Meri_Maula.wav",
+      "audioFile": "Subhanallah_Tu_Hi_Meri_Maula.wav",
+      "cover": "./assets/covers/cover_subhanallah_maula.jpg",
+      "coverFile": "cover_subhanallah_maula.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-013",
+      "title": "Ishq-e-Suroor (Mere Allah)",
+      "artist": "JOHNNY TEC × Qawwali Ensemble",
+      "category": "Spiritual",
+      "audio": "./assets/music/Ishq_E_Suroor_Mere_Allah.wav",
+      "audioFile": "Ishq_E_Suroor_Mere_Allah.wav",
+      "cover": "./assets/covers/cover_ishq_e_suroor.jpg",
+      "coverFile": "cover_ishq_e_suroor.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-014",
+      "title": "Muhammad Nabina",
+      "artist": "Hamada Helal",
+      "category": "Traditional",
+      "audio": "./assets/music/Muhammad_Nabina_Hamada_Helal.wav",
+      "audioFile": "Muhammad_Nabina_Hamada_Helal.wav",
+      "cover": "./assets/covers/cover_muhammad_nabina.jpg",
+      "coverFile": "cover_muhammad_nabina.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-015",
+      "title": "Assalamu Alayka",
+      "artist": "Maher Zain",
+      "category": "Spiritual",
+      "audio": "./assets/music/Assalamu_Alayka_Maher_Zain.wav",
+      "audioFile": "Assalamu_Alayka_Maher_Zain.wav",
+      "cover": "./assets/covers/cover_assalamu_alayka.jpg",
+      "coverFile": "cover_assalamu_alayka.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-016",
+      "title": "Huwa Ahmadun wa Muhammad",
+      "artist": "Ahmed Al-Muqit",
+      "category": "Traditional",
+      "audio": "./assets/music/Huwa_Ahmadun_Wa_Muhammad.wav",
+      "audioFile": "Huwa_Ahmadun_Wa_Muhammad.wav",
+      "cover": "./assets/covers/cover_huwa_ahmadun.jpg",
+      "coverFile": "cover_huwa_ahmadun.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-017",
+      "title": "Hubb Ennabi",
+      "artist": "Mostafa Atef",
+      "category": "Spiritual",
+      "audio": "./assets/music/Hubb_Ennabi_Mostafa_Atef.wav",
+      "audioFile": "Hubb_Ennabi_Mostafa_Atef.wav",
+      "cover": "./assets/covers/cover_hubb_ennabi.jpg",
+      "coverFile": "cover_hubb_ennabi.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-018",
+      "title": "Allah Ya Maulana",
+      "artist": "Maher Zain",
+      "category": "Dua",
+      "audio": "./assets/music/Allah_Ya_Maulana_Maher_Zain.wav",
+      "audioFile": "Allah_Ya_Maulana_Maher_Zain.wav",
+      "cover": "./assets/covers/cover_allah_ya_maulana.jpg",
+      "coverFile": "cover_allah_ya_maulana.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-019",
+      "title": "Ala Nahjik Mashayt",
+      "artist": "Humood AlKhudher",
+      "category": "Peace",
+      "audio": "./assets/music/Ala_Nahjik_Mashayt_Humood_AlKhudher.wav",
+      "audioFile": "Ala_Nahjik_Mashayt_Humood_AlKhudher.wav",
+      "cover": "./assets/covers/cover_ala_nahjik_mashayt.jpg",
+      "coverFile": "cover_ala_nahjik_mashayt.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-020",
+      "title": "Kun Balsaman",
+      "artist": "Abdul Majeed Al-Fawzan",
+      "category": "Peace",
+      "audio": "./assets/music/Kun_Balsaman_Abdul_Majeed_AlFawzan.wav",
+      "audioFile": "Kun_Balsaman_Abdul_Majeed_AlFawzan.wav",
+      "cover": "./assets/covers/cover_kun_balsaman.jpg",
+      "coverFile": "cover_kun_balsaman.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-021",
+      "title": "Al-Subhu Bada",
+      "artist": "Maher Zain",
+      "category": "Traditional",
+      "audio": "./assets/music/Al_Subhu_Bada_Maher_Zain.wav",
+      "audioFile": "Al_Subhu_Bada_Maher_Zain.wav",
+      "cover": "./assets/covers/cover_al_subhu_bada.jpg",
+      "coverFile": "cover_al_subhu_bada.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-022",
+      "title": "Al Hubbu Yasood",
+      "artist": "Humood AlKhudher",
+      "category": "Peace",
+      "audio": "./assets/music/Al_Hubbu_Yasood_Humood_AlKhudher.wav",
+      "audioFile": "Al_Hubbu_Yasood_Humood_AlKhudher.wav",
+      "cover": "./assets/covers/cover_al_hubbu_yasood.jpg",
+      "coverFile": "cover_al_hubbu_yasood.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-023",
+      "title": "A Thousand Years (Acoustic Prayer)",
+      "artist": "JOHNNY TEC Instrumental",
+      "category": "Peace",
+      "audio": "./assets/music/A_Thousand_Years_Acoustic_Prayer.wav",
+      "audioFile": "A_Thousand_Years_Acoustic_Prayer.wav",
+      "cover": "./assets/covers/cover_a_thousand_years_prayer.jpg",
+      "coverFile": "cover_a_thousand_years_prayer.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-024",
+      "title": "Insha Allah",
+      "artist": "Maher Zain",
+      "category": "Dua",
+      "audio": "./assets/music/Insha_Allah_Maher_Zain.wav",
+      "audioFile": "Insha_Allah_Maher_Zain.wav",
+      "cover": "./assets/covers/cover_insha_allah.jpg",
+      "coverFile": "cover_insha_allah.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-025",
+      "title": "Allahumma Taqabbalna",
+      "artist": "Maher Zain",
+      "category": "Dua",
+      "audio": "./assets/music/Allahumma_Taqabbalna_Maher_Zain.wav",
+      "audioFile": "Allahumma_Taqabbalna_Maher_Zain.wav",
+      "cover": "./assets/covers/cover_allahumma_taqabbalna.jpg",
+      "coverFile": "cover_allahumma_taqabbalna.jpg",
+      "bytes": 5644844
+    },
+    {
+      "id": "nasheed-026",
+      "title": "La Ilaha Illallah (Asma'ul Anbiya)",
+      "artist": "Traditional Choir × JOHNNY TEC",
+      "category": "Spiritual",
+      "audio": "./assets/music/La_Ilaha_Illallah_Asmaul_Anbiya.wav",
+      "audioFile": "La_Ilaha_Illallah_Asmaul_Anbiya.wav",
+      "cover": "./assets/covers/cover_la_ilaha_illallah.jpg",
+      "coverFile": "cover_la_ilaha_illallah.jpg",
+      "bytes": 5644844
     }
   ]
 }
