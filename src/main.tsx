@@ -5,7 +5,9 @@ import './index.css';
 // Register Service Worker for Offline PWA Capabilities
 if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
   window.addEventListener('load', () => {
-    const swUrl = `${import.meta.env.BASE_URL || '/'}service-worker.js`.replace(/\/\//g, '/');
+    const baseUrl = import.meta.env.BASE_URL || './';
+    const cleanBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+    const swUrl = `${cleanBase}service-worker.js`;
     navigator.serviceWorker
       .register(swUrl)
       .then((reg) => {

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -19,7 +20,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build & Prepare
+    name: Build & Prepare Application
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -29,12 +30,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            echo "package-lock.json found. Installing with npm ci..."
+            npm ci || npm install --legacy-peer-deps
+          else
+            echo "No package-lock.json found. Installing with npm install..."
+            npm install --legacy-peer-deps
+          fi
 
-      - name: Sync Repository Assets to Public Directory
+      - name: Preserve & Sync Repository Music & Covers
         run: |
           mkdir -p public/assets/music public/assets/covers
           if [ -d "assets/music" ]; then
@@ -44,13 +51,16 @@ jobs:
             cp -r assets/covers/* public/assets/covers/ 2>/dev/null || true
           fi
 
-      - name: Build Application
+      - name: Build Application with Vite
         run: npm run build
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v4
+      - name: Prevent Jekyll Static File Processing
+        run: touch dist/.nojekyll
 
-      - name: Upload Artifact
+      - name: Setup GitHub Pages Configuration
+        uses: actions/configure-pages@v5
+
+      - name: Upload Build Output Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
