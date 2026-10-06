@@ -23,13 +23,19 @@ const PRECACHE_ASSETS = [
   './assets/covers/nasheed-005.jpg',
   './assets/covers/file_000000004e288210992b60529184b6b7.png',
   './assets/covers/file_00000000cda8820ab24ae8c8200f7de1.png',
+  './assets/covers/kun_rahma.jpg',
+  './assets/covers/insha_allah.jpg',
+  './assets/covers/assubhu_bada.jpg',
   './assets/music/nasheed-001.wav',
   './assets/music/nasheed-002.wav',
   './assets/music/nasheed-003.wav',
   './assets/music/nasheed-004.wav',
   './assets/music/nasheed-005.wav',
-  './assets/music/A Thousand Years (Slowed)- Christina Perri_1790383311858.mp3',
-  './assets/music/Dynasty (Official Music Video)  MIIA_1790372753013.mp3'
+  './assets/music/A_Thousand_Years_Slowed_Christina_Perri.mp3',
+  './assets/music/Dynasty_MIIA.mp3',
+  './assets/music/Kun_Rahma_Maher_Zain.mp3',
+  './assets/music/Insha_Allah_Maher_Zain.mp3',
+  './assets/music/Assubhu_Bada_Maher_Zain.mp3'
 ];
 
 // Install: pre-cache application shell and core nasheed assets
