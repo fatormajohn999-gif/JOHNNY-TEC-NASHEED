@@ -16,10 +16,16 @@ import { CategoriesPage } from './pages/CategoriesPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { PageId } from './types';
+import { offlineLibrary } from './services/offlineLibrary';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+
+  // Automatically begin checking and caching missing music manifest files in background
+  React.useEffect(() => {
+    offlineLibrary.initAndAutoCache();
+  }, []);
 
   const handleNavigate = (page: PageId, categoryId?: string) => {
     setSelectedCategory(categoryId);
@@ -36,13 +42,18 @@ export default function App() {
         {/* Global Top App Bar */}
         <TopBar currentPage={currentPage} onNavigate={handleNavigate} />
 
-        {/* Main Content Area */}
-        <main className="flex-1 w-full max-w-5xl mx-auto px-4 pt-4 pb-20 sm:pb-28">
+        {/* Main Content Area with reserved space for bottom navigation & mini player */}
+        <main
+          className="flex-1 w-full max-w-5xl mx-auto px-4 pt-4 sm:pb-32"
+          style={{
+            paddingBottom: 'calc(11.5rem + env(safe-area-inset-bottom, 0px))'
+          }}
+        >
           {currentPage === 'home' && <HomePage onNavigate={handleNavigate} />}
           {currentPage === 'search' && <SearchPage />}
           {currentPage === 'categories' && <CategoriesPage initialCategoryId={selectedCategory} />}
           {currentPage === 'favorites' && <FavoritesPage onNavigate={handleNavigate} />}
-          {currentPage === 'profile' && <ProfilePage />}
+          {currentPage === 'profile' && <ProfilePage onNavigate={handleNavigate} />}
         </main>
 
         {/* Persistent Floating Mini-Player */}

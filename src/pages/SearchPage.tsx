@@ -46,7 +46,7 @@ export const SearchPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 pb-32">
+    <div className="space-y-6 pb-6">
       {/* Search Bar Header */}
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight">Search Library</h1>

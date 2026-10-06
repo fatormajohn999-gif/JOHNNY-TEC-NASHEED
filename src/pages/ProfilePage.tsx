@@ -4,24 +4,30 @@ import {
   Wifi,
   WifiOff,
   Trash2,
-  FolderGit2,
   Download,
   Info,
   CheckCircle2,
-  Music,
-  Plus
+  Heart,
+  Clock,
+  HardDrive,
+  RefreshCw,
+  ChevronRight,
+  UserCheck
 } from 'lucide-react';
 import { usePlayer } from '../context/PlayerContext';
 import { useOnlineStatus } from '../components/pwa/OfflineIndicator';
 import { PWAInstallButton } from '../components/pwa/PWAInstallButton';
-import { UploadNasheedModal } from '../components/modals/UploadNasheedModal';
-import { getSongAudioUrl } from '../utils/paths';
+import { useOfflineLibrary } from '../services/offlineLibrary';
+import { PageId } from '../types';
 
-export const ProfilePage: React.FC = () => {
-  const { allSongs, favorites, history, clearFavorites, clearHistory } = usePlayer();
+interface ProfilePageProps {
+  onNavigate?: (page: PageId) => void;
+}
+
+export const ProfilePage: React.FC<ProfilePageProps> = ({ onNavigate }) => {
+  const { favorites, history, clearFavorites, clearHistory } = usePlayer();
   const isOnline = useOnlineStatus();
-  const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [cacheStatus, setCacheStatus] = useState<'idle' | 'caching' | 'done'>('idle');
+  const { state: offlineState, retryDownload } = useOfflineLibrary();
   const [clearedNotice, setClearedNotice] = useState<string | null>(null);
 
   const handleClearFavs = () => {
@@ -35,41 +41,14 @@ export const ProfilePage: React.FC = () => {
   const handleClearHist = () => {
     if (window.confirm('Are you sure you want to clear your listening history?')) {
       clearHistory();
-      setClearedNotice('History has been cleared');
+      setClearedNotice('Listening history has been cleared');
       setTimeout(() => setClearedNotice(null), 3000);
     }
   };
 
-  const handlePrecacheAllAudio = async () => {
-    if (!('caches' in window)) {
-      alert('Cache API is not available on this browser');
-      return;
-    }
-
-    setCacheStatus('caching');
-    try {
-      const cache = await caches.open('johnny-tec-nasheed-v1');
-      const urlsToCache = allSongs.map(s => getSongAudioUrl(s));
-      await Promise.all(
-        urlsToCache.map(async (url) => {
-          try {
-            await cache.add(url);
-          } catch (e) {
-            console.debug('Cached item notice:', url, e);
-          }
-        })
-      );
-      setCacheStatus('done');
-      setTimeout(() => setCacheStatus('idle'), 4000);
-    } catch (e) {
-      console.warn('Failed to pre-cache audio files:', e);
-      setCacheStatus('idle');
-    }
-  };
-
   return (
-    <div className="space-y-6 pb-32">
-      {/* Brand Hero Card */}
+    <div className="space-y-6 pb-6">
+      {/* 1. Profile / Header Card */}
       <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 text-center relative overflow-hidden shadow-xl">
         <div className="absolute inset-0 bg-radial from-amber-500/10 via-transparent to-transparent pointer-events-none" />
 
@@ -81,141 +60,230 @@ export const ProfilePage: React.FC = () => {
             JOHNNY TEC <span className="text-amber-400 font-light">×</span> NASHEED
           </h1>
           <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-            A dedicated, contemplative Islamic audio player designed for pure nasheed listening with real Web Audio visualizer.
+            Your sacred listening space for nasheeds, spiritual contemplation, and vocal serenity.
           </p>
 
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px] text-slate-400">
-            <span className="px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700">
-              Version 1.0.0 (PWA)
-            </span>
-            <span className="px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700">
-              Standalone Ready
-            </span>
             <span className="px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 flex items-center gap-1.5">
               {isOnline ? (
                 <>
                   <Wifi className="w-3 h-3 text-emerald-400" />
-                  <span className="text-emerald-300">Online</span>
+                  <span className="text-emerald-300 font-medium">Online</span>
                 </>
               ) : (
                 <>
                   <WifiOff className="w-3 h-3 text-amber-400" />
-                  <span className="text-amber-300">Offline Mode</span>
+                  <span className="text-amber-300 font-medium">Offline Mode</span>
                 </>
               )}
+            </span>
+            <span className="px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700">
+              Version 1.0.0
             </span>
           </div>
         </div>
       </div>
 
       {clearedNotice && (
-        <div className="p-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4" />
+        <div className="p-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2 animate-fade-in">
+          <CheckCircle2 className="w-4 h-4 shrink-0" />
           <span>{clearedNotice}</span>
         </div>
       )}
 
-      {/* PWA Installation Card */}
-      <section aria-labelledby="pwa-install-heading">
-        <PWAInstallButton variant="card" />
-      </section>
+      {/* 2. YOUR OFFLINE LIBRARY */}
+      <section aria-labelledby="offline-library-heading" className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 id="offline-library-heading" className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <HardDrive className="w-4 h-4 text-amber-400" />
+            Your Offline Library
+          </h2>
+          <span className="text-[11px] text-slate-400 tabular-nums">
+            {offlineState.totalTracks} tracks · {offlineState.totalSizeFormatted} total
+          </span>
+        </div>
 
-      {/* Library Management & GitHub Workflow */}
-      <section aria-labelledby="library-info-heading" className="space-y-3">
-        <h2 id="library-info-heading" className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <FolderGit2 className="w-4 h-4 text-amber-400" />
-          Music Library Management
-        </h2>
+        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3.5 shadow-md">
+          {/* Status Badge & Summary */}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                offlineState.isOfflineReady
+                  ? 'bg-emerald-500/15 text-emerald-400'
+                  : offlineState.isDownloading
+                  ? 'bg-amber-500/15 text-amber-400'
+                  : 'bg-slate-800 text-slate-300'
+              }`}>
+                {offlineState.isOfflineReady ? (
+                  <CheckCircle2 className="w-5 h-5" />
+                ) : offlineState.isDownloading ? (
+                  <RefreshCw className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Download className="w-5 h-5" />
+                )}
+              </div>
 
-        <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3 text-xs text-slate-300">
-          <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-            <span className="text-slate-400">Total Nasheeds in Library</span>
-            <span className="font-bold text-white tabular-nums">{allSongs.length} tracks</span>
+              <div>
+                <h3 className="text-sm font-bold text-white">
+                  {offlineState.isOfflineReady
+                    ? '✓ Available offline'
+                    : offlineState.isDownloading
+                    ? 'Downloading for offline...'
+                    : 'Offline Library'}
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  {offlineState.isOfflineReady
+                    ? `All ${offlineState.totalTracks} tracks saved locally on device`
+                    : offlineState.isDownloading
+                    ? `${offlineState.cachedTracksCount} of ${offlineState.totalTracks} tracks (${offlineState.cachedSizeFormatted} / ${offlineState.totalSizeFormatted})`
+                    : `${offlineState.cachedTracksCount} of ${offlineState.totalTracks} tracks ready for offline`}
+                </p>
+              </div>
+            </div>
+
+            {/* Retry download button if not completely ready and not currently downloading */}
+            {!offlineState.isOfflineReady && !offlineState.isDownloading && (
+              <button
+                onClick={retryDownload}
+                className="px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 hover:bg-amber-500/25 text-xs font-semibold flex items-center gap-1.5 transition active:scale-95 shrink-0"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download for Offline</span>
+              </button>
+            )}
           </div>
-          <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-            <span className="text-slate-400">Favorited Tracks</span>
-            <span className="font-bold text-amber-400 tabular-nums">{favorites.length} saved</span>
-          </div>
-          <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-            <span className="text-slate-400">Listening History</span>
-            <span className="font-bold text-white tabular-nums">{history.length} played</span>
-          </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row gap-2">
-            <button
-              onClick={() => setIsUploadOpen(true)}
-              className="flex-1 py-2.5 px-3 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 hover:bg-amber-500/25 font-medium flex items-center justify-center gap-1.5 transition"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Import Audio File to Test</span>
-            </button>
+          {/* Progress Bar (when downloading or partially cached) */}
+          {offlineState.isDownloading && (
+            <div className="space-y-1.5 pt-1">
+              <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-amber-500 to-amber-300 rounded-full transition-all duration-300"
+                  style={{ width: `${Math.max(5, offlineState.downloadProgress)}%` }}
+                />
+              </div>
+              {offlineState.currentDownloadingTrack && (
+                <p className="text-[11px] text-slate-400 truncate">
+                  Downloading: <span className="text-slate-300 font-medium">{offlineState.currentDownloadingTrack}</span>
+                </p>
+              )}
+            </div>
+          )}
 
-            <button
-              onClick={handlePrecacheAllAudio}
-              disabled={cacheStatus === 'caching'}
-              className="flex-1 py-2.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium flex items-center justify-center gap-1.5 transition"
-            >
-              <Download className="w-4 h-4 text-teal-400" />
-              <span>{cacheStatus === 'caching' ? 'Caching...' : cacheStatus === 'done' ? 'Cached!' : 'Pre-cache All for Offline'}</span>
-            </button>
+          <div className="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
+            <span>Offline Playback</span>
+            <span className="text-slate-300 font-medium">No internet connection required</span>
           </div>
         </div>
       </section>
 
-      {/* Storage and Reset */}
-      <section aria-labelledby="storage-heading" className="space-y-3">
-        <h2 id="storage-heading" className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <Trash2 className="w-4 h-4 text-amber-400" />
-          Local Device Storage
-        </h2>
+      {/* 3. FAVORITES */}
+      <section aria-labelledby="favorites-section-heading" className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 id="favorites-section-heading" className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <Heart className="w-4 h-4 text-amber-400" />
+            Favorites
+          </h2>
+          <span className="text-[11px] text-amber-400/90 font-medium tabular-nums">
+            {favorites.length} saved
+          </span>
+        </div>
 
-        <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2.5">
-          <p className="text-xs text-slate-400">
-            Favorites, playback position, and listening history are preserved locally in your browser storage. No account or login is required.
+        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3 shadow-md">
+          <p className="text-xs text-slate-300">
+            {favorites.length > 0
+              ? `You have ${favorites.length} nasheed${favorites.length === 1 ? '' : 's'} saved to your favorite collection.`
+              : 'You have not added any favorites yet. Tap the heart on any nasheed while browsing.'}
           </p>
 
-          <div className="pt-2 flex flex-wrap gap-2">
-            <button
-              onClick={handleClearFavs}
-              className="px-3 py-2 rounded-lg bg-slate-800 hover:bg-red-950/40 hover:text-red-300 text-xs font-medium text-slate-300 transition"
-            >
-              Clear Favorites
-            </button>
-            <button
-              onClick={handleClearHist}
-              className="px-3 py-2 rounded-lg bg-slate-800 hover:bg-red-950/40 hover:text-red-300 text-xs font-medium text-slate-300 transition"
-            >
-              Clear History
-            </button>
+          <div className="pt-1 flex items-center justify-between gap-2">
+            {onNavigate && favorites.length > 0 && (
+              <button
+                onClick={() => onNavigate('favorites')}
+                className="px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 hover:bg-amber-500/25 text-xs font-medium flex items-center gap-1.5 transition active:scale-95"
+              >
+                <span>Browse Favorites</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            {favorites.length > 0 && (
+              <button
+                onClick={handleClearFavs}
+                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-red-950/40 hover:text-red-300 text-xs font-medium text-slate-300 transition"
+              >
+                Clear Favorites
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section aria-labelledby="about-heading" className="space-y-3">
-        <h2 id="about-heading" className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+      {/* 4. LISTENING HISTORY */}
+      <section aria-labelledby="history-section-heading" className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 id="history-section-heading" className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <Clock className="w-4 h-4 text-amber-400" />
+            Listening History
+          </h2>
+          <span className="text-[11px] text-slate-400 tabular-nums">
+            {history.length} played
+          </span>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3 shadow-md">
+          <p className="text-xs text-slate-300">
+            {history.length > 0
+              ? `Your recent playback history contains ${history.length} track${history.length === 1 ? '' : 's'}.`
+              : 'Your listening history is currently empty.'}
+          </p>
+
+          {history.length > 0 && (
+            <div className="pt-1">
+              <button
+                onClick={handleClearHist}
+                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-red-950/40 hover:text-red-300 text-xs font-medium text-slate-300 transition"
+              >
+                Clear History
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 5. ABOUT JOHNNY TEC × NASHEED */}
+      <section aria-labelledby="about-section-heading" className="space-y-3">
+        <h2 id="about-section-heading" className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <Info className="w-4 h-4 text-amber-400" />
           About JOHNNY TEC × NASHEED
         </h2>
 
-        <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3 text-xs text-slate-300 leading-relaxed">
+        <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 text-xs text-slate-300 leading-relaxed shadow-md">
           <p>
-            <strong className="text-white">JOHNNY TEC × NASHEED</strong> is a dedicated nasheed listening application built without social media feeds, algorithms, or distractions.
+            <strong className="text-white font-semibold">JOHNNY TEC × NASHEED</strong> is a dedicated listening space for nasheeds, spiritual remembrance, traditional poetry, and peaceful vocal arrangements.
           </p>
           <p>
-            The project allows you to place MP3 audio files directly into your GitHub repository at <code className="text-amber-300 bg-slate-950 px-1 py-0.5 rounded">assets/music/</code> and artwork into <code className="text-amber-300 bg-slate-950 px-1 py-0.5 rounded">assets/covers/</code>, automatically bundled and cached for offline playback on mobile and desktop.
+            Built for focused listening without social feeds, unnecessary distractions, or noisy algorithms.
           </p>
-          <div className="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400">
-            Designed with dark spiritual aesthetics, Web Audio API frequency analysis, and Progressive Web App compliance.
+          <p>
+            Listen online or keep your favorite nasheeds available for offline listening.
+          </p>
+
+          {/* About the Creator */}
+          <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+            <span className="text-slate-400">About the Creator</span>
+            <span className="text-amber-400 font-semibold flex items-center gap-1.5">
+              <UserCheck className="w-3.5 h-3.5 text-amber-400" />
+              Created by JOHNNY TEC
+            </span>
           </div>
         </div>
       </section>
 
-      {/* Upload/Import Modal */}
-      <UploadNasheedModal
-        isOpen={isUploadOpen}
-        onClose={() => setIsUploadOpen(false)}
-      />
+      {/* App Installation */}
+      <section aria-labelledby="install-heading">
+        <PWAInstallButton variant="card" />
+      </section>
     </div>
   );
 };

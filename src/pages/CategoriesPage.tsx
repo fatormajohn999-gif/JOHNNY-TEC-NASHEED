@@ -45,7 +45,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({ initialCategoryI
   };
 
   return (
-    <div className="space-y-6 pb-32">
+    <div className="space-y-6 pb-6">
       {activeCategory ? (
         /* Detailed Category View */
         <div className="space-y-5 animate-fade-in">

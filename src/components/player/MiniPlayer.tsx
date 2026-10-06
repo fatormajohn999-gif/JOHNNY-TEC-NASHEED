@@ -32,7 +32,10 @@ export const MiniPlayer: React.FC = () => {
     <div
       onClick={openNowPlaying}
       aria-label={`Now playing: ${currentSong.title}. Tap to open player`}
-      className="fixed bottom-16 sm:bottom-0 left-0 right-0 z-40 max-w-2xl mx-auto px-3 py-1 cursor-pointer"
+      style={{
+        bottom: 'calc(4.25rem + env(safe-area-inset-bottom, 0px))'
+      }}
+      className="fixed sm:!bottom-4 left-0 right-0 z-40 max-w-2xl mx-auto px-3 py-1 cursor-pointer transition-all duration-200"
     >
       <div className="relative overflow-hidden rounded-2xl bg-slate-900/95 border border-slate-800/90 shadow-2xl backdrop-blur-xl transition-all duration-200 hover:border-slate-700/90">
         {/* Progress Bar Hairline */}

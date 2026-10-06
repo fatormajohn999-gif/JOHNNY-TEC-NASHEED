@@ -26,7 +26,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const continueProgress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="space-y-8 pb-32">
+    <div className="space-y-8 pb-6">
       {/* Editorial Welcome Header */}
       <section className="pt-2">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">

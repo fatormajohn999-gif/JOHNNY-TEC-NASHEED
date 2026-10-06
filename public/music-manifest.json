@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-10-06T01:59:17.294Z",
+  "totalTracks": 5,
+  "totalBytes": 24696220,
+  "totalSizeFormatted": "23.6 MB",
+  "tracks": [
+    {
+      "id": "nasheed-001",
+      "title": "Ya Rahman",
+      "artist": "JOHNNY TEC × Ensemble",
+      "category": "Spiritual",
+      "audio": "./assets/music/nasheed-001.wav",
+      "audioFile": "nasheed-001.wav",
+      "cover": "./assets/covers/nasheed-001.jpg",
+      "coverFile": "nasheed-001.jpg",
+      "bytes": 4939244
+    },
+    {
+      "id": "nasheed-002",
+      "title": "Ramadan Peace",
+      "artist": "JOHNNY TEC",
+      "category": "Ramadan",
+      "audio": "./assets/music/nasheed-002.wav",
+      "audioFile": "nasheed-002.wav",
+      "cover": "./assets/covers/nasheed-002.jpg",
+      "coverFile": "nasheed-002.jpg",
+      "bytes": 4939244
+    },
+    {
+      "id": "nasheed-003",
+      "title": "Tala'al Badru Alayna",
+      "artist": "Tradition & JOHNNY TEC",
+      "category": "Traditional",
+      "audio": "./assets/music/nasheed-003.wav",
+      "audioFile": "nasheed-003.wav",
+      "cover": "./assets/covers/nasheed-003.jpg",
+      "coverFile": "nasheed-003.jpg",
+      "bytes": 4939244
+    },
+    {
+      "id": "nasheed-004",
+      "title": "Dua for Solace",
+      "artist": "JOHNNY TEC",
+      "category": "Dua",
+      "audio": "./assets/music/nasheed-004.wav",
+      "audioFile": "nasheed-004.wav",
+      "cover": "./assets/covers/nasheed-004.jpg",
+      "coverFile": "nasheed-004.jpg",
+      "bytes": 4939244
+    },
+    {
+      "id": "nasheed-005",
+      "title": "Peaceful Dawn (Fajr Tasbeeh)",
+      "artist": "JOHNNY TEC × Choir",
+      "category": "Peace",
+      "audio": "./assets/music/nasheed-005.wav",
+      "audioFile": "nasheed-005.wav",
+      "cover": "./assets/covers/nasheed-005.jpg",
+      "coverFile": "nasheed-005.jpg",
+      "bytes": 4939244
+    }
+  ]
+}

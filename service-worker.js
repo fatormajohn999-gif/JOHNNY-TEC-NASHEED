@@ -9,6 +9,7 @@ const PRECACHE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './music-manifest.json',
   './icon.svg',
   './pwa-192x192.png',
   './pwa-512x512.png',

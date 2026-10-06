@@ -11,8 +11,6 @@ import {
   Repeat,
   Repeat1,
   ListMusic,
-  Volume2,
-  VolumeX,
   Sliders,
   Sparkles,
   AlertCircle
@@ -31,8 +29,6 @@ export const NowPlayingModal: React.FC = () => {
     isPlaying,
     currentTime,
     duration,
-    volume,
-    isMuted,
     isShuffle,
     repeatMode,
     isNowPlayingOpen,
@@ -41,8 +37,6 @@ export const NowPlayingModal: React.FC = () => {
     seekTo,
     skipNext,
     skipPrev,
-    setVolume,
-    toggleMute,
     toggleShuffle,
     cycleRepeat,
     toggleFavorite,
@@ -323,38 +317,21 @@ export const NowPlayingModal: React.FC = () => {
           </button>
         </div>
 
-        {/* Bottom Bar: Volume & Queue */}
-        <div className="flex items-center justify-between px-2 pt-2 pb-5 border-t border-slate-900">
-          {/* Volume Control */}
-          <div className="flex items-center gap-2 flex-1 max-w-[200px]">
-            <button
-              onClick={toggleMute}
-              aria-label={isMuted ? 'Unmute' : 'Mute'}
-              className="min-w-[40px] min-h-[40px] flex items-center justify-center text-slate-400 hover:text-white"
-            >
-              {isMuted || volume === 0 ? (
-                <VolumeX className="w-4 h-4 text-slate-500" />
-              ) : (
-                <Volume2 className="w-4 h-4 text-slate-300" />
-              )}
-            </button>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.05"
-              value={isMuted ? 0 : volume}
-              onChange={(e) => setVolume(parseFloat(e.target.value))}
-              aria-label="Playback volume"
-              className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
-            />
-          </div>
+        {/* Bottom Bar: Visualizer & Queue */}
+        <div className="flex items-center justify-between px-3 pt-3 pb-6 border-t border-slate-900/80">
+          <button
+            onClick={() => setShowVisualizerSettings(prev => !prev)}
+            aria-label="Tuning audio visualizer"
+            className="min-h-[44px] px-4 rounded-xl bg-slate-900/80 hover:bg-slate-850 border border-slate-800 text-xs font-medium text-slate-300 flex items-center gap-2 transition active:scale-95"
+          >
+            <Sliders className="w-4 h-4 text-amber-400" />
+            <span>Visualizer</span>
+          </button>
 
-          {/* Open Queue Button */}
           <button
             onClick={toggleQueue}
             aria-label="Open playback queue"
-            className="min-h-[44px] px-3.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs font-medium text-slate-300 flex items-center gap-2 transition active:scale-95"
+            className="min-h-[44px] px-4 rounded-xl bg-slate-900/80 hover:bg-slate-850 border border-slate-800 text-xs font-medium text-slate-300 flex items-center gap-2 transition active:scale-95"
           >
             <ListMusic className="w-4 h-4 text-amber-400" />
             <span>Queue</span>

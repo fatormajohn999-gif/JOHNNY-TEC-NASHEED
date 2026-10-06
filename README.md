@@ -119,8 +119,8 @@ The automated GitHub Actions workflow will validate the files, build the Vite ap
 The app uses a dedicated **Service Worker** (`service-worker.js`) with a versioned cache:
 - **App Shell:** HTML, CSS, JavaScript, icons, and fonts are precached on install.
 - **Audio Files:** Cached using a Cache-First strategy with full support for **HTTP 206 Partial Content Range Requests** (required for iOS Safari audio scrubbing).
-- **Offline Reliability:** Once loaded, you can turn off Wi-Fi/Mobile Data and continue searching, browsing, playing cached nasheeds, and managing favorites.
-- **Pre-Cache Button:** On the **Profile / Settings** screen, tap **"Pre-cache All for Offline"** to download the entire library to your device storage before traveling.
+- **Automatic Pre-Caching:** When you open the app, it automatically checks the build-time music size manifest (`music-manifest.json`) and downloads any missing tracks in the background without interrupting playback.
+- **Your Offline Library:** The Profile screen displays real-time offline status, total tracks, total download size, and download progress.
 
 ---
 

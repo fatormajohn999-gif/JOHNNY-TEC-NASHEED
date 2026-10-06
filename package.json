@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "validate": "tsx scripts/validate-library.ts",
+    "manifest": "tsx scripts/generate-manifest.ts",
+    "validate": "tsx scripts/validate-library.ts && tsx scripts/generate-manifest.ts",
     "scan": "tsx scripts/scan-library.ts",
-    "build": "tsx scripts/validate-library.ts && vite build",
+    "build": "tsx scripts/validate-library.ts && tsx scripts/generate-manifest.ts && vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
